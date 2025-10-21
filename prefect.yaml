@@ -23,7 +23,7 @@ deployments:
     tags: []
     concurrency_limit: null
     description: Master pipeline for preprocessing, ML training, and predictions
-    entrypoint: master_pipeline_prefect.py:master_pipeline_flow
+    entrypoint: master_pipeline.py:master_pipeline_flow
     parameters:
       new_data_path: "farmer_suicide_large_realistic.csv"  # default path for prediction CSV
     work_pool:
