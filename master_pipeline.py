@@ -6,6 +6,7 @@ from ml_pipeline_prefect import ml_pipeline_flow
 def master_pipeline_flow():
     data_pipeline_flow()   # Run data ingestion + preprocessing
     ml_pipeline_flow()     # Then run ML training + evaluation
+    prediction_flow(new_data_path=new_data_path)
 
 #if __name__ == "__main__":
 #    master_pipeline_flow()
