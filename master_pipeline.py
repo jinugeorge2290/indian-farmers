@@ -7,5 +7,5 @@ def master_pipeline_flow():
     data_pipeline_flow()   # Run data ingestion + preprocessing
     ml_pipeline_flow()     # Then run ML training + evaluation
 
-if __name__ == "__main__":
-    master_pipeline_flow()
+#if __name__ == "__main__":
+#    master_pipeline_flow()
