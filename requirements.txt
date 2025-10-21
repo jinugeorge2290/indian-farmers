@@ -6,4 +6,4 @@ scikit-learn
 seaborn
 matplotlib
 prefect>=3.0.0
-
+tabulate
