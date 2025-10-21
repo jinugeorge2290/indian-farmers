@@ -1,5 +1,6 @@
 pandas
-boto3
-scikit-learn
 numpy
-prefect
+boto3
+s3fs
+scikit-learn
+prefect>=3.0.0
