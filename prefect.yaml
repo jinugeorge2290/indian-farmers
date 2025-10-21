@@ -1,29 +1,39 @@
 name: indian-farmers
 prefect-version: 3.4.24
 
+# Build & Push sections (no custom build or push)
 build: null
 push: null
 
+# Pull section: clone repo and install dependencies
 pull:
   - prefect.deployments.steps.git_clone:
       id: clone_repo
       repository: https://github.com/suraj821/indian-farmers.git
       branch: master
-
   - prefect.deployments.steps.set_working_directory:
       directory: "{{ clone_repo.directory }}"
-
   - prefect.deployments.steps.pip_install_requirements:
       requirements_file: requirements.txt
 
+# Deployments section
 deployments:
   - name: master_pipeline
-    entrypoint: master_pipeline.py:master_pipeline_flow
+    version: null
+    tags: []
+    concurrency_limit: null
+    description: Master pipeline for preprocessing, ML training, and predictions
+    entrypoint: master_pipeline_prefect.py:master_pipeline_flow
+    parameters:
+      new_data_path: "farmer_suicide_large_realistic.csv"  # default path for prediction CSV
     work_pool:
       name: farmers-dataml-pipeline
+      work_queue_name: null
       job_variables:
         PREFECT_DOCKER_IMAGE: "public.ecr.aws/prefecthq/prefect:3-latest"
         PREFECT_JOB_MEMORY: 4096
     schedules:
-      - interval: 3600.0
+      - interval: 3600.0  # run every 1 hour
+        anchor_date: '2025-10-21T00:00:00+00:00'
+        timezone: UTC
         active: true
