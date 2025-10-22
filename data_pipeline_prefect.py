@@ -4,9 +4,10 @@ from prefect import flow, task
 from prefect.artifacts import create_markdown_artifact
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from prefect.logging import get_run_logger
 import seaborn as sns
 import matplotlib.pyplot as plt
-import logging
+import logging 
 import os # For checking file existence
 
 logging.basicConfig(level=logging.INFO)
@@ -80,6 +81,7 @@ def perform_eda(data):
 def save_processed_data(data, path):
     # This task is now just for local saving.
     # To truly persist, you should switch this to a Storage Block (Option 2).
+    logger = get_run_logger()
     data.to_csv(path, index=False)
     
     # Create an artifact indicating where the large file was saved.
@@ -88,7 +90,7 @@ def save_processed_data(data, path):
         markdown=f"Processed DataFrame saved locally to: `{path}`\n\n**Warning:** This file is only available inside the worker/container where the flow ran. Use a Storage Block (like S3) for persistence.",
         description="Location of the full processed CSV file."
     )
-    logging.info(f"Processed data saved to {path}")
+    logger.info(f"Processed data saved to {path}")
 
 @flow(name="Farmer Suicide Data Pipeline")
 def data_pipeline_flow():
