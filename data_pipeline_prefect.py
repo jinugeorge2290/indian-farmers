@@ -91,6 +91,7 @@ def save_processed_data(data, path):
         description="Location of the full processed CSV file."
     )
     logger.info(f"Processed data saved to {path}")
+    logger.info(f"Processed data  {data}")
 
 @flow(name="Farmer Suicide Data Pipeline")
 def data_pipeline_flow():
